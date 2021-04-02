@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import './screens/products_overview_screen.dart';
 import './providers/products.dart';
+import './screens/product_detail_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,14 +15,16 @@ class MyApp extends StatelessWidget {
       //we set it here, because some children of this widget are interested in listening to the changes
       //only the widgets that are listening will be rebuilt
       child: MaterialApp(
-        title: 'MyShop',
-        theme: ThemeData(
-          primarySwatch: Colors.deepOrange,
-          primaryColor: Colors.purple,
-          fontFamily: 'Lato',
-        ),
-        home: ProductsOverviewScreen(),
-      ),
+          title: 'MyShop',
+          theme: ThemeData(
+            primarySwatch: Colors.deepOrange,
+            primaryColor: Colors.purple,
+            fontFamily: 'Lato',
+          ),
+          home: ProductsOverviewScreen(),
+          routes: {
+            ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+          }),
     );
   }
 }
