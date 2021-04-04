@@ -43,10 +43,19 @@ class Products with ChangeNotifier {
   ];
   //I made this list private, so it can't be accesed or modified outside this file
 
+  // var _showFavoritesOnly = false;
+
   List<Product> get items {
+    // if (_showFavoritesOnly) {
+    //   return _items.where((element) => element.isFavorite).toList();
+    // }
     return [..._items];
     //I return a copy of that list, because if I only returned _items, I would return the pointer to that list,
     //so the list can be modified anywhere outside this file and I don't want that.
+  }
+
+  List<Product> get favoriteItems {
+    return _items.where((element) => element.isFavorite).toList();
   }
 
   void addProduct() {
@@ -59,4 +68,14 @@ class Products with ChangeNotifier {
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
+
+  // void showFavoritesOnly() {
+  //   _showFavoritesOnly = true;
+  //   notifyListeners();
+  // }
+
+  // void showAll() {
+  //   _showFavoritesOnly = false;
+  //   notifyListeners();
+  // }
 }

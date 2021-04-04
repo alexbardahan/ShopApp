@@ -5,19 +5,26 @@ import '../providers/products.dart';
 import './product_item.dart';
 
 class ProductsGrid extends StatelessWidget {
+  final bool showFavs;
+
+  ProductsGrid(this.showFavs);
   @override
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
-    final products = productsData.items;
+    final products = showFavs ? productsData.favoriteItems : productsData.items;
     //which is a getter, not a property of Products class
     return GridView.builder(
       padding: EdgeInsets.all(10),
       itemCount: products.length,
-      itemBuilder: (ctx, i) => ChangeNotifierProvider(
-          create: (c) => products[i],
-          child: ProductItem(
-              // products[i].id, products[i].title, products[i].imageUrl
-              )),
+      // itemBuilder: (ctx, i) => ChangeNotifierProvider(
+      //     create: (c) => products[i],
+      //child: ProductItem(),)
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+        value: products[i],
+        //aici arunca un obiect de tip Product, ce va fi prins de unul dintre copii, in cazul asta, ProductItem()
+        //in this case we have to use that .value constructor because we are inside an single GridView item/List item
+        child: ProductItem(),
+      ),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           childAspectRatio: 3 / 2,
