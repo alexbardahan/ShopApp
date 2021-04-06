@@ -12,7 +12,7 @@ class ProductsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
     final products = showFavs ? productsData.favoriteItems : productsData.items;
-    //which is a getter, not a property of Products class
+
     return GridView.builder(
       padding: EdgeInsets.all(10),
       itemCount: products.length,

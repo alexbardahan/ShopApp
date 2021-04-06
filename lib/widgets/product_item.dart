@@ -16,6 +16,7 @@ class ProductItem extends StatelessWidget {
     //listen is set to false, so it is not listening for changes to be rebuilt
     //it will rebuilt only the Icon Button, by using the Consumer class
     final cart = Provider.of<Cart>(context, listen: false);
+    //we will use it here only to use its methods, so we set the listen to false
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -51,6 +52,19 @@ class ProductItem extends StatelessWidget {
               icon: Icon(Icons.shopping_cart),
               onPressed: () {
                 cart.addItem(product.id, product.price, product.title);
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                //so the current snackbar will be hidden if you press again in less than 2 seconds
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      'Item added to the cart!',
+                    ),
+                    duration: Duration(seconds: 2),
+                    action: SnackBarAction(
+                      label: 'UNDO',
+                      onPressed: () {
+                        cart.removeSingleItem(product.id);
+                      },
+                    )));
               },
               color: Theme.of(context).accentColor,
             )
